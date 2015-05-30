@@ -1,0 +1,10 @@
+Contratos desse tipo > uri,Código,Descrição
+/contratos/v1/contratos?tipo_contrato=50,50,CONTRATO
+/contratos/v1/contratos?tipo_contrato=51,51,CREDENCIAMENTO
+/contratos/v1/contratos?tipo_contrato=52,52,COMODATO
+/contratos/v1/contratos?tipo_contrato=53,53,ARRENDAMENTO
+/contratos/v1/contratos?tipo_contrato=54,54,CONCESSÃO
+/contratos/v1/contratos?tipo_contrato=55,55,TERMO ADITIVO
+/contratos/v1/contratos?tipo_contrato=56,56,TERMO DE ADESÃO
+/contratos/v1/contratos?tipo_contrato=57,57,CONVÊNIO
+/contratos/v1/contratos?tipo_contrato=60,60,TERMO DE APOSTILAMENTO
