@@ -1,3 +1,4 @@
+import sys
 import json
 import urlparse
 import requests
@@ -5,9 +6,47 @@ import requests
 BASE_URL = 'http://compras.dados.gov.br'
 LICITACOES_URL = 'licitacoes/v1/licitacoes.json'
 CONTRATOS_URL = 'contratos/v1/contratos.json'
+MATERIAIS_URL = 'materiais/v1/materiais.json'
+CLASSES_URL = 'materiais/v1/classes.json'
 
 def get_url(url):
     return '%s/%s' % (BASE_URL, url)
+
+def download_all(url, dataname):
+    has_next = True
+    params = {}
+    c = 0;
+
+    error_url = []
+
+    while has_next:
+        print 'GET:', url
+        r = requests.get(get_url(url), params=params)
+
+        if r.status_code != 200:
+            error_url.append(url)
+            parse = urlparse.urlparse(get_url(url))
+            query = dict(urlparse.parse_qsl(parse.query))
+            offset = int(query['offset'])
+            offset += 500
+            url = url.replace(query['offset'], str(offset))
+            continue
+        data = r.json()
+
+        f = open('%s_%09d.json' % (dataname, c), 'w')
+        f.write(json.dumps(data))
+        f.close()
+        c += 1
+
+        links = data['_links']
+        has_next = links.get('next', False)
+        if has_next:
+#            print has_next['href']
+#            parseresult = urlparse.urlparse(has_next['href'])
+#            offset = parseresult.params['offset']
+#            params['offset'] = offset
+            url = has_next['href']
+    print error_url
 
 def fetch_all(out_file, url, dataname, params):
     has_next = True
